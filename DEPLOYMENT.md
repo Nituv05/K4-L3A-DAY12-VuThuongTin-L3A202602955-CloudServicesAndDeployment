@@ -12,15 +12,15 @@
 |-----|----------|
 | Họ và tên | Vũ Thường Tín |
 | Mã học viên | 2A202602955 |
-| Repo | (điền link repo K4-L3A-DAY12-HoVaTen-MSSV-CloudServicesAndDeployment) |
+| Repo | https://github.com/Nituv05/K4-L3A-DAY12-VuThuongTin-L3A202602955-CloudServicesAndDeployment |
 
 ## Service
 
 | Mục | Nội dung |
 |-----|----------|
-| Public URL | https://TODO-thay-bang-url-that.up.railway.app |
-| Platform | Railway / Render / Cloud Run — (điền platform bạn dùng) |
-| Ngày deploy | (điền ngày) |
+| Public URL | https://day12-agent-4n9z.onrender.com |
+| Platform | Render |
+| Ngày deploy | 2026-09-28 |
 
 ## Biến Môi Trường Đã Set Trên Cloud
 
@@ -30,7 +30,7 @@ Ghi tên biến và **nguồn giá trị**, không ghi giá trị:
 |------|--------|---------|
 | `PORT` | ✅ | platform tự gán |
 | `AGENT_API_KEY` | ✅ | đặt trong dashboard, không nằm trong repo |
-| `REDIS_URL` | ✅ | (điền: Redis add-on của platform / Upstash / ...) |
+| `REDIS_URL` | ✅ | Render Key Value day12-redis, region Oregon; Blueprint gán connectionString |
 | `RATE_LIMIT_PER_MINUTE` | ✅ | 10 |
 | `MONTHLY_BUDGET_USD` | ✅ | 10.0 |
 | `LOG_LEVEL` | ✅ | INFO |
@@ -73,29 +73,57 @@ done; echo
 Dán output của các lệnh trên vào đây:
 
 ```
-(điền output)
+Kiểm tra thật ngày 2026-09-28:
+GET /health → 200 {"status":"ok","service":"day12-agent","version":"1.0.0"}
+GET /ready → 200 {"status":"ready","redis":true}
+POST /ask không có khóa → 401 {"detail":"invalid or missing API key"}
+POST /ask có khóa → 200; answer có nội dung; history_length=0; cost_usd=0.00002145
+15 request tuần tự với user mới → 200 200 200 200 200 200 200 200 200 200 429 429 429 429 429
+CP1–CP5: 79 passed, 4 skipped (fallback local), không có test fail.
 ```
 
 ## Ảnh Chụp Màn Hình
 
 Đặt ảnh trong thư mục `screenshots/`:
 
-- `screenshots/dashboard.png` — trang quản lý service trên platform
-- `screenshots/health.png` — kết quả gọi `/health` từ trình duyệt hoặc curl
+- `screenshots/dashboard.png` — ảnh dashboard học viên cung cấp lúc deploy thất bại, trước khi thêm AGENT_API_KEY; minh chứng lỗi đã xử lý, không phải ảnh trạng thái Live
+- `screenshots/health.png` — ảnh trình duyệt headless gọi /health trên URL public sau khi sửa lỗi; response status ok
 
 ---
 
-## Nếu Dùng Phương Án Dự Phòng
+## Lỗi Deploy Đã Xử Lý
 
-Không đăng ký được tài khoản cloud? Vẫn nộp được bài, nhưng CP5 tối đa 60% điểm:
+Lần đầu tạo thêm Blueprint bị chặn vì workspace đã có một Key Value Free. Dùng lại Blueprint lab12 và Redis day12-redis. Sau đó app báo ValidationError: agent_api_key Field required và thoát status 3. Thêm AGENT_API_KEY trong Environment của day12-agent và deploy lại commit 3818df1. Các kiểm tra public bên trên đã xác nhận app chạy và kết nối Redis.
 
-1. Đặt `LOCAL_FALLBACK=true` trong `.env`
-2. Chạy `docker compose up -d` rồi kiểm tra `docker compose ps`
-3. Chụp màn hình vào `screenshots/`
-4. Chạy `pytest tests/test_cp5.py -v` — bộ test sẽ tự chuyển sang kiểm tra
-   `http://localhost:8000`
-5. Ghi rõ lý do không deploy được vào phần dưới đây:
+Không dùng LOCAL_FALLBACK.
 
+## Kết Quả Chấm Tự Động
+
+Chạy ngày 2026-09-28:
+
+```bash
+.venv/bin/python -m pytest tests/test_cp1.py tests/test_cp2.py tests/test_cp3.py tests/test_cp4.py tests/test_cp5.py -q
+.venv/bin/python grade.py --no-bonus
 ```
-(điền lý do nếu dùng phương án dự phòng, ngược lại xóa mục này)
+
+| Phần | Kết quả |
+|------|---------|
+| CP1 | 13/13 pass |
+| CP2 | 16/16 pass, gồm kiểm tra Docker thật |
+| CP3 | 22/22 pass |
+| CP4 | 19/19 pass |
+| CP5 | 9/9 pass; 4 test fallback local bị skip vì dùng cloud |
+| Tổng test bắt buộc | 79 pass, 4 skip, 0 fail |
+| grade.py --no-bonus | 100.0/100 điểm tự động |
+
+Điểm phản ánh chỉ đếm mức độ hoàn thành. Các câu trong exercises.md được hỗ trợ biên soạn từ kết quả thật; học viên cần đọc, kiểm chứng và giải thích được trước khi nộp. Chưa triển khai bonus CI/CD. Điểm cuối còn do giảng viên đánh giá chất lượng câu trả lời và yêu cầu nộp bài.
+
+## Tên Repository Khi Nộp Bài
+
+MSSV học viên xác nhận là 2A202602955. Tên repository đúng theo mẫu nộp bài là:
+
+```text
+K4-L3A-DAY12-VuThuongTin-2A202602955-CloudServicesAndDeployment
 ```
+
+Repo GitHub hiện vẫn chứa L3A202602955 trong tên. Chưa đổi được tên từ workspace vì không có quyền đăng nhập GitHub phục vụ thao tác quản trị. Link trong bảng thông tin học viên ở trên là link repo đang tồn tại, không phải link dự kiến sau khi đổi tên.
