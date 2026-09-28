@@ -10,8 +10,8 @@
 
 | Mục | Nội dung |
 |-----|----------|
-| Họ và tên | (điền họ tên) |
-| Mã học viên | (điền mã học viên) |
+| Họ và tên | Vũ Thường Tín |
+| Mã học viên | 2A202602955 |
 | Repo | (điền link repo K4-L3A-DAY12-HoVaTen-MSSV-CloudServicesAndDeployment) |
 
 ## Service

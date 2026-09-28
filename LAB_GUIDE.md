@@ -489,9 +489,9 @@ for i in $(seq 1 5); do
 done
 ```
 
-Muốn xem load balancing thật thì bật thêm service `nginx` (cấu hình đã có sẵn ở
-`nginx/nginx.conf`) và gọi qua cổng 80 — phần mở rộng tùy chọn, không phải
-bonus chấm điểm riêng.
+Compose giữ cổng `localhost:8000` qua service `gateway` rồi gửi request tới
+`agent`; scale nhiều agent không cần publish cùng một host port. `nginx/nginx.conf`
+còn là cấu hình tham khảo nếu muốn thay gateway bằng Nginx.
 
 ### ✅ Checkpoint 4 — Start +200 phút
 
