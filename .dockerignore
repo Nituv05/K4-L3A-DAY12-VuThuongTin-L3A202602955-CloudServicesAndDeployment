@@ -1,6 +1,27 @@
-# TODO (CP2): file này quyết định thứ KHÔNG được copy vào image.
-# Bỏ sót .env = leak secret vào image. Bỏ sót .git = image phình to.
-# Bổ sung đủ các mục còn thiếu — xem tests/test_cp2.py để biết yêu cầu.
+# Secrets and local environment
+.env
+.env.*
+*.pem
+*.key
+.venv
+venv
+env
 
+# Version control, caches and local files
 .git
 .gitignore
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+**/*.egg-info
+.DS_Store
+.idea
+.vscode
+.agents
+.codex
+*.log
+
+# Files not needed by the service
+tests
+screenshots
+solution
