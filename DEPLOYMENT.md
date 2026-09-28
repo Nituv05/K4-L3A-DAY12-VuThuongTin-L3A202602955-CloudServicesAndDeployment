@@ -86,7 +86,7 @@ CP1–CP5: 79 passed, 4 skipped (fallback local), không có test fail.
 
 Đặt ảnh trong thư mục `screenshots/`:
 
-- `screenshots/dashboard.png` — ảnh dashboard học viên cung cấp lúc deploy thất bại, trước khi thêm AGENT_API_KEY; minh chứng lỗi đã xử lý, không phải ảnh trạng thái Live
+- `screenshots/dashboard.png` — ảnh dashboard học viên cung cấp lúc 23:12 ngày 2026-09-28: day12-agent có trạng thái Deployed và day12-redis có trạng thái Available, cùng region Oregon
 - `screenshots/health.png` — ảnh trình duyệt headless gọi /health trên URL public sau khi sửa lỗi; response status ok
 
 ---
